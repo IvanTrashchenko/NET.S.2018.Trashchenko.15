@@ -79,6 +79,7 @@ namespace CollectionsLibrary
         /// Initializes a new instance of the queue class with the help of IEnumerable element.
         /// </summary>
         /// <param name="collection">IEnumerable element.</param>
+        /// <exception cref="ArgumentNullException">Thrown when parameter is null.</exception>
         public Queue(IEnumerable<T> collection)
         {
             if (collection == null)
