@@ -109,6 +109,8 @@ namespace CollectionsLibrary
         /// </summary>
         public bool IsEmpty => this.Count == 0;
 
+        //understood, will remove it soon! 
+        
         /// <summary>
         /// Queue's indexator.
         /// </summary>
