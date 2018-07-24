@@ -18,6 +18,10 @@ namespace CollectionsLibrary.ConsoleTest
             a.Dequeue();
             a.Dequeue();
 
+            Console.WriteLine(a.Contains(3)); // true
+
+            Console.WriteLine(a.Contains(0)); // true
+
             foreach (int item in a)
             {
                 Console.WriteLine(item);
@@ -32,7 +36,7 @@ namespace CollectionsLibrary.ConsoleTest
               7 tail
               0*/
 
-            Console.WriteLine(a[2]); // 5
+            Console.WriteLine(a.GetElement(2)); // 5
 
             a.TrimExcess();
 
@@ -51,24 +55,36 @@ namespace CollectionsLibrary.ConsoleTest
 
             Console.WriteLine(b.Contains("f3")); // true
 
+            Console.WriteLine(b.Contains(null)); // false
+
             b.Clear();
+
+            Console.WriteLine(b.Contains("f3")); // false
+
+            Console.WriteLine(b.Contains(null)); // true
 
             foreach (string item in b)
             {
-                Console.WriteLine(item); // 8 empties because of capacity increasing
+                Console.WriteLine(item); // 8 nulls because of capacity increasing
             }
-
-            Random rand = new Random();
 
             for (int i = 0; i < 1000; i++)
             {
-                c.Enqueue(new TimeSpan(rand.Next()));
+                c.Enqueue(new TimeSpan(i));
             }
 
-            foreach (var item in c)
+            for (int i = 0; i < 500; i++)
             {
-                Console.WriteLine(item); 
+                c.Dequeue();
             }
+
+            var arr = c.ToArray();
+
+            foreach (var item in arr)
+            {
+                Console.WriteLine(item);
+            }
+
 
             Console.ReadKey();
         }

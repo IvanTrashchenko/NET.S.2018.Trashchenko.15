@@ -109,31 +109,6 @@ namespace CollectionsLibrary
         /// </summary>
         public bool IsEmpty => this.Count == 0;
 
-        //understood, will remove it soon! 
-        
-        /// <summary>
-        /// Queue's indexator.
-        /// </summary>
-        /// <param name="index">Index value.</param>
-        /// <returns>Queue's element of specific index.</returns>
-        /// <exception cref="IndexOutOfRangeException">Thrown when index is out of range.</exception>
-        public T this[int index]
-        {
-            get
-            {
-                if (index < 0 || index > this.capacity - 1)
-                {
-                    throw new IndexOutOfRangeException($"{nameof(index)} is out of range.");
-                }
-
-                int resultIndex = (this.head + index) >= this.capacity
-                                      ? (this.head + index - this.capacity)
-                                      : (this.head + index);
-
-                return this.innerArray[resultIndex];
-            }
-        }
-
         #endregion
 
         #region Public methods
@@ -160,17 +135,16 @@ namespace CollectionsLibrary
         {
             foreach (var element in this.innerArray)
             {
-                /*if (ReferenceEquals(element, item))
+                if (ReferenceEquals(element, item))
                 {
                     return true;
                 }
-                 
-                if (element == null)
-                {
-                    continue;
-                }*/
 
-                // if (EqualityComparer<T>.Default.Equals(item, element))
+                if (ReferenceEquals(element, null) || ReferenceEquals(item, null))
+                {
+                    return false;
+                }
+
                 if (element.Equals(item))
                 {
                     return true;
@@ -268,8 +242,8 @@ namespace CollectionsLibrary
             }
             else
             {
-                Array.Copy(this.innerArray, this.head, arr, 0, this.innerArray.Length - this.head);
-                Array.Copy(this.innerArray, 0, arr, this.innerArray.Length - this.head, this.tail);
+                Array.Copy(this.innerArray, this.head, arr, 0, this.capacity - this.head);
+                Array.Copy(this.innerArray, 0, arr, this.capacity - this.head, this.tail);
             }
 
             return arr;
@@ -298,6 +272,26 @@ namespace CollectionsLibrary
             this.version++;
         }
 
+        /// <summary>
+        /// Method wgich gets queue's element of specific position.
+        /// </summary>
+        /// <param name="position">Position value.</param>
+        /// <returns>Queue's element of specific position.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when position value is out of range.</exception>
+        public T GetElement(int position)
+        {
+            if (position < 0 || position > this.capacity - 1)
+            {
+                throw new IndexOutOfRangeException($"{nameof(position)} is out of range.");
+            }
+
+            int resultIndex = (this.head + position) >= this.capacity
+                                  ? (this.head + position - this.capacity)
+                                  : (this.head + position);
+
+            return this.innerArray[resultIndex];
+        }
+
         #endregion
 
         #region IEnumerable methods
@@ -323,8 +317,8 @@ namespace CollectionsLibrary
             private readonly int version;
 
             private int currentIndex;
-           
-            internal Enumerator(Queue<T> queue)
+
+            public Enumerator(Queue<T> queue)
             {
                 this.queue = queue;
                 this.version = queue.version;
@@ -361,7 +355,7 @@ namespace CollectionsLibrary
                     return false;
                 }
 
-                this.Current = this.queue[this.currentIndex];
+                this.Current = this.queue.GetElement(this.currentIndex);
                 return true;
             }
 
