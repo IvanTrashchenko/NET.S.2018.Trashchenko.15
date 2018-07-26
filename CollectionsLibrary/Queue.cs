@@ -52,19 +52,11 @@ namespace CollectionsLibrary
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the queue class with default capacity.
-        /// </summary>
-        public Queue()
-            : this(DefaultCapacity)
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the queue class with specific capacity.
         /// </summary>
         /// <param name="capacity">Capacity of the queue</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when capacity is out of range.</exception>
-        public Queue(int capacity)
+        public Queue(int capacity = DefaultCapacity)
         {
             if (capacity < 0)
             {
