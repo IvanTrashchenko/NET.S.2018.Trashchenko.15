@@ -7,9 +7,8 @@ namespace CollectionsLibrary
     /// <summary>
     /// Custom queue collection class.
     /// </summary>
-    /// <typeparam name="T">IEquatable type of each stack element.</typeparam>
+    /// <typeparam name="T">Type of each stack element.</typeparam>
     public class Queue<T> : IEnumerable<T>
-        where T : IEquatable<T>
     {
         #region Constants
 
@@ -127,17 +126,7 @@ namespace CollectionsLibrary
         {
             foreach (var element in this.innerArray)
             {
-                if (ReferenceEquals(element, item))
-                {
-                    return true;
-                }
-
-                if (ReferenceEquals(element, null) || ReferenceEquals(item, null))
-                {
-                    return false;
-                }
-
-                if (element.Equals(item))
+                if (EqualityComparer<T>.Default.Equals(element, item))
                 {
                     return true;
                 }

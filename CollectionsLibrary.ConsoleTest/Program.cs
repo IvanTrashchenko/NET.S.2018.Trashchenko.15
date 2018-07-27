@@ -53,10 +53,6 @@ namespace CollectionsLibrary.ConsoleTest
 
             Console.WriteLine(b.Peek()); // f0
 
-            Console.WriteLine(b.Contains("f3")); // true
-
-            Console.WriteLine(b.Contains(null)); // false
-
             b.Clear();
 
             Console.WriteLine(b.Contains("f3")); // false
